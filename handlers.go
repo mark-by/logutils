@@ -3,7 +3,6 @@ package logutils
 import (
 	"bytes"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
 	"io"
 	"io/ioutil"
@@ -12,7 +11,6 @@ import (
 
 // /logs
 func GetLogs(ctx *fasthttp.RequestCtx) {
-	logrus.Info("Hiiii")
 	if logFile == nil {
 		ctx.Response.SetStatusCode(fasthttp.StatusNoContent)
 		return

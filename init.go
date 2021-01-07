@@ -9,10 +9,10 @@ import (
 var logFile *os.File
 
 type Options struct {
-	File string
+	File      string
 	SetFormat func()
 	SetOutput func(io.Writer)
-	SetLevel func()
+	SetLevel  func()
 }
 
 func Init(options *Options) {
@@ -33,6 +33,3 @@ func setOutput(options *Options) {
 	}
 	options.SetOutput(file)
 }
-
-
-
