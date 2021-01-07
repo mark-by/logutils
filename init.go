@@ -26,7 +26,8 @@ func setOutput(options *Options) {
 	}
 
 	options.SetFormat()
-	file, err := os.Create(options.File)
+	file, err := os.OpenFile(options.File,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	logFile = file
 	if err != nil {
 		logrus.Fatal("Fail to create file for logs: ", err)
