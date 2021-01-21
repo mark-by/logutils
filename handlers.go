@@ -3,11 +3,23 @@ package logutils
 import (
 	"bytes"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
 	"io"
 	"io/ioutil"
 	"os"
 )
+
+// /logs/changeLevel
+func ChangeLevel(ctx *fasthttp.RequestCtx) {
+	level := string(ctx.QueryArgs().Peek("level"))
+	if level == "" {
+		ctx.SetStatusCode(fasthttp.StatusBadRequest)
+		return
+	}
+
+	logrus.SetLevel(chooseLevel(level))
+}
 
 // /logs
 func GetLogs(ctx *fasthttp.RequestCtx) {
@@ -26,7 +38,7 @@ func GetLogs(ctx *fasthttp.RequestCtx) {
 	ctx.SetBody(logs)
 }
 
-// logs/reset
+// /logs/reset
 func ResetLogs(ctx *fasthttp.RequestCtx) {
 	tmpFile, err := os.Create(logFile.Name() + ".tmp")
 
